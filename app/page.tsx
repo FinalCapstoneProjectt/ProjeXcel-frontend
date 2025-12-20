@@ -1,9 +1,9 @@
-import { Header } from "@/app/src/components/layout/Header";
-import { Footer } from "@/app/src/components/layout/Footer";
-import { HeroSection } from "@/app/src/components/home/HeroSection";
-import { FeaturesSection } from "@/app/src/components/home/FeaturesSection";
-import { RolesSection } from "@/app/src/components/home/RolesSection";
-import { CTASection } from "./src/components/home/CTASection";
+import { Header } from "@/app/(src)/components/layout/Header";
+import { Footer } from "@/app/(src)/components/layout/Footer";
+import { HeroSection } from "@/app/(src)/components/home/HeroSection";
+import { FeaturesSection } from "@/app/(src)/components/home/FeaturesSection";
+import { RolesSection } from "@/app/(src)/components/home/RolesSection";
+import { CTASection } from "./(src)/components/home/CTASection";
 import { Metadata } from "next";
 
 // Next.js handles SEO via the metadata object
