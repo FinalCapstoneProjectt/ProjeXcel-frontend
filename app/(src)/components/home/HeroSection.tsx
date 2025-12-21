@@ -10,13 +10,13 @@ export function HeroSection() {
       
       <div className="container relative mx-auto px-4 text-center">
         <div className="animate-in fade-in slide-in-from-top-4 duration-700 inline-flex items-center gap-2 rounded-full border bg-white/50 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-muted-foreground mb-8">
-          <Sparkles className="h-4 w-4 text-primary" />
+          <Sparkles className="h-4 w-4 text-yellow-500" />
           <span>University Project Management Platform</span>
         </div>
 
         <h1 className="animate-in fade-in slide-in-from-bottom-6 duration-1000 text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8">
           Streamline Your <br />
-          <span className="text-gradient">Academic Projects</span>
+          <span className="text-gradient text-primary">Academic Projects</span>
         </h1>
 
         <p className="animate-in fade-in slide-in-from-bottom-8 duration-1000 text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
