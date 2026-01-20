@@ -6,11 +6,10 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   FileText,
+  Upload,
   Users,
   Settings,
   MessageSquare,
-  Upload,
-  CheckCircle,
   UserCog,
   Building2,
   Globe,
@@ -38,9 +37,8 @@ const navigationItems = {
   ],
   teacher: [
     { name: "Dashboard", href: "/teacher/dashboard", icon: LayoutDashboard },
-    { name: "Assigned Proposals", href: "/teacher/dashboard/proposals", icon: FileText },
-    { name: "Reviews", href: "/teacher/dashboard/reviews", icon: CheckCircle },
-    { name: "Discussions", href: "/teacher/dashboard/discussions", icon: MessageSquare },
+    { name: "Assigned Proposals", href: "/teacher/dashboard/assigned-proposals", icon: FileText },
+    { name: "Reviews", href: "/teacher/dashboard/documentation-review", icon: CheckCircle },
     { name: "Settings", href: "/teacher/dashboard/settings", icon: Settings },
   ],
   admin: [
@@ -53,17 +51,17 @@ const navigationItems = {
   ],
 };
 
-// IMPORTANT: The "export" keyword must be here
 export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  // Fallback to student if role is undefined or invalid
   const items = navigationItems[role] || navigationItems.student;
 
   return (
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+        <div 
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-in fade-in duration-200"
           onClick={onClose}
         />
       )}
@@ -71,16 +69,16 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          "fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-64 border-r bg-card transition-transform duration-300 lg:translate-x-0",
+          "fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-64 border-r bg-card transition-transform duration-300 lg:translate-x-0 shadow-lg lg:shadow-none",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-full flex-col">
-          {/* Mobile Header */}
+          {/* Mobile Header (Only visible inside sidebar on mobile) */}
           <div className="flex items-center justify-between border-b p-4 lg:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-primary p-1.5 rounded-lg">
-                <GraduationCap className="h-4 w-4 text-white" />
+                <GraduationCap className="h-4 w-4 text-primary-foreground" />
               </div>
               <span className="font-bold">Project Hub</span>
             </div>
@@ -103,7 +101,10 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+                  onClick={() => { 
+                    // Close sidebar on mobile when a link is clicked
+                    if (window.innerWidth < 1024) onClose(); 
+                  }}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
