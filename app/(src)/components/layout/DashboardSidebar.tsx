@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/app/(src)/lib/utils";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   FileText,
+  Upload,
   Users,
   Settings,
   MessageSquare,
-  Upload,
-  CheckCircle,
   UserCog,
   Building2,
   Globe,
@@ -37,14 +36,14 @@ const navigationItems = {
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ],
   teacher: [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Assigned Proposals", href: "/dashboard/proposals", icon: FileText },
-    { name: "Reviews", href: "/dashboard/reviews", icon: CheckCircle },
-    { name: "Discussions", href: "/dashboard/discussions", icon: MessageSquare },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    // FIXED: Removed '/pages' prefix. Assuming your routes are app/teacher/dashboard/page.tsx
+    { name: "Dashboard", href: "/pages/teacher/dashboard", icon: LayoutDashboard },
+    { name: "Assigned Proposals", href: "/pages/teacher/assigned-proposals", icon: FileText },
+    { name: "Documentation Review", href: "/pages/teacher/documentation-review", icon: Upload },
+    { name: "Settings", href: "/teacher/settings", icon: Settings },
   ],
   admin: [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "User Management", href: "/admin/users", icon: UserCog },
     { name: "Departments", href: "/admin/departments", icon: Building2 },
     { name: "Assignments", href: "/admin/assignments", icon: Users },
@@ -53,9 +52,9 @@ const navigationItems = {
   ],
 };
 
-// IMPORTANT: The "export" keyword must be here
 export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  // Fallback to student if role is undefined or invalid
   const items = navigationItems[role] || navigationItems.student;
 
   return (
@@ -63,7 +62,7 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
       {/* Mobile overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-in fade-in duration-200"
           onClick={onClose}
         />
       )}
@@ -71,16 +70,16 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          "fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-64 border-r bg-card transition-transform duration-300 lg:translate-x-0",
+          "fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-64 border-r bg-card transition-transform duration-300 lg:translate-x-0 shadow-lg lg:shadow-none",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-full flex-col">
-          {/* Mobile Header */}
+          {/* Mobile Header (Only visible inside sidebar on mobile) */}
           <div className="flex items-center justify-between border-b p-4 lg:hidden">
             <div className="flex items-center gap-2">
               <div className="bg-primary p-1.5 rounded-lg">
-                <GraduationCap className="h-4 w-4 text-white" />
+                <GraduationCap className="h-4 w-4 text-primary-foreground" />
               </div>
               <span className="font-bold">Project Hub</span>
             </div>
@@ -92,13 +91,17 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
           {/* Nav Links */}
           <nav className="flex-1 space-y-1 p-3 overflow-y-auto">
             {items.map((item) => {
-              const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
+              // Check active state more loosely to highlight 'Assigned Proposals' even when in 'Assigned Proposals/1/review'
+              const isActive = pathname === item.href || (item.href !== "/dashboard" && item.href !== "/teacher/dashboard" && pathname.startsWith(item.href));
               
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+                  onClick={() => { 
+                    // Close sidebar on mobile when a link is clicked
+                    if (window.innerWidth < 1024) onClose(); 
+                  }}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
