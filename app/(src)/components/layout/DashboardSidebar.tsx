@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/app/(src)/lib/utils";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   FileText,
@@ -29,22 +29,22 @@ interface SidebarProps {
 
 const navigationItems = {
   student: [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "My Proposals", href: "/dashboard/proposals", icon: FileText },
-    { name: "Group Members", href: "/dashboard/group", icon: Users },
-    { name: "Discussions", href: "/dashboard/discussions", icon: MessageSquare },
-    { name: "Documents", href: "/dashboard/documents", icon: Upload },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    { name: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
+    { name: "My Proposals", href: "/student/dashboard/proposals", icon: FileText },
+    { name: "Group Members", href: "/student/dashboard/group", icon: Users },
+    { name: "Discussions", href: "/student/dashboard/discussions", icon: MessageSquare },
+    { name: "Documents", href: "/student/dashboard/documentation", icon: Upload },
+    { name: "Settings", href: "/student/dashboard/settings", icon: Settings },
   ],
   teacher: [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Assigned Proposals", href: "/dashboard/proposals", icon: FileText },
-    { name: "Reviews", href: "/dashboard/reviews", icon: CheckCircle },
-    { name: "Discussions", href: "/dashboard/discussions", icon: MessageSquare },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    { name: "Dashboard", href: "/teacher/dashboard", icon: LayoutDashboard },
+    { name: "Assigned Proposals", href: "/teacher/dashboard/proposals", icon: FileText },
+    { name: "Reviews", href: "/teacher/dashboard/reviews", icon: CheckCircle },
+    { name: "Discussions", href: "/teacher/dashboard/discussions", icon: MessageSquare },
+    { name: "Settings", href: "/teacher/dashboard/settings", icon: Settings },
   ],
   admin: [
-    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "User Management", href: "/admin/users", icon: UserCog },
     { name: "Departments", href: "/admin/departments", icon: Building2 },
     { name: "Assignments", href: "/admin/assignments", icon: Users },
@@ -62,7 +62,7 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
@@ -92,8 +92,13 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
           {/* Nav Links */}
           <nav className="flex-1 space-y-1 p-3 overflow-y-auto">
             {items.map((item) => {
-              const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href));
-              
+              // Exact match for dashboard root, prefix match for others
+              const isActive = pathname === item.href ||
+                (item.href !== "/student/dashboard" &&
+                  item.href !== "/teacher/dashboard" &&
+                  item.href !== "/admin/dashboard" &&
+                  pathname.startsWith(item.href));
+
               return (
                 <Link
                   key={item.name}
