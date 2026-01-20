@@ -8,8 +8,6 @@ type UserRole = "student" | "teacher" | "admin";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  // In Next.js layouts, role is often determined by auth logic, 
-  // but we'll keep the prop for compatibility.
   role?: UserRole;
 }
 
@@ -17,20 +15,12 @@ export function DashboardLayout({ children, role = "student" }: DashboardLayoutP
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* 
-        Header usually contains the user profile and the 
-        mobile menu trigger 
-      */}
+    <div className="min-h-screen bg-gray-50/50">
       <Header 
         showMenuButton 
         onMenuClick={() => setSidebarOpen(true)} 
       />
 
-      {/* 
-        The Sidebar is usually hidden on mobile (controlled by isOpen)
-        and fixed on desktop (lg:block)
-      */}
       <DashboardSidebar 
         role={role} 
         isOpen={sidebarOpen} 
@@ -38,11 +28,11 @@ export function DashboardLayout({ children, role = "student" }: DashboardLayoutP
       />
 
       {/* 
-        The sidebar width is 64 (16rem), so we pad the left side 
-        on large screens to prevent content overlap.
+         ADDED: pt-20 (padding-top) to push content down below the fixed header (16px + 4px buffer)
+         lg:pl-64 pushes content right for the sidebar
       */}
-      <main className="lg:pl-64 transition-all duration-300">
-        <div className="container max-w-7xl py-6 lg:py-8">
+      <main className="pt-20 lg:pl-64 transition-all duration-300">
+        <div className="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
           {children}
         </div>
       </main>

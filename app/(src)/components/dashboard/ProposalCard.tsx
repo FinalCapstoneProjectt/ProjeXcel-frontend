@@ -31,15 +31,15 @@ interface ProposalCardProps {
 
 const statusConfig: Record<ProposalStatus, { 
   label: string; 
-  variant: "draft" | "submitted" | "review" | "approved" | "rejected" | "warning" 
+  variant: "destructive" | "default" | "secondary" | "outline"
 }> = {
-  draft: { label: "Draft", variant: "draft" },
-  submitted: { label: "Submitted", variant: "submitted" },
-  under_review: { label: "Under Review", variant: "review" },
-  review: { label: "Under Review", variant: "review" },
-  revision_requested: { label: "Revision Requested", variant: "warning" },
-  approved: { label: "Approved", variant: "approved" },
-  rejected: { label: "Rejected", variant: "rejected" },
+  draft: { label: "Draft", variant: "default" },
+  submitted: { label: "Submitted", variant: "secondary" },
+  under_review: { label: "Under Review", variant: "outline" },
+  review: { label: "Under Review", variant: "outline" },
+  revision_requested: { label: "Revision Requested", variant: "destructive" },
+  approved: { label: "Approved", variant: "default" },
+  rejected: { label: "Rejected", variant: "destructive" },
 };
 
 export function ProposalCard({
@@ -58,7 +58,7 @@ export function ProposalCard({
   const displayDate = date || lastUpdated;
 
   return (
-    <Card variant="interactive" className="group">
+    <Card variant="elevated" className="group">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1.5">
