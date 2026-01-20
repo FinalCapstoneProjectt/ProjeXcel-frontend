@@ -7,11 +7,11 @@ import { ProposalCard } from "@/app/(src)/components/dashboard/ProposalCard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  FileText, 
-  CheckCircle, 
-  Clock, 
-  AlertCircle, 
+import {
+  FileText,
+  CheckCircle,
+  Clock,
+  AlertCircle,
   Plus,
   Bell,
   ArrowRight,
@@ -47,7 +47,7 @@ export default function DashboardPage() {
          3. Used space-y-8 to create consistent vertical flow.
       */}
       <div className="flex-1 space-y-8 p-4 pt-6 md:p-8 max-w-7xl mx-auto">
-        
+
         {/* Header Section */}
         <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 animate-in fade-in slide-in-from-bottom-4">
           <div className="space-y-1">
@@ -58,10 +58,10 @@ export default function DashboardPage() {
               Here&apos;s an overview of your project proposals.
             </p>
           </div>
-          
-          <Button 
-            className="w-full sm:w-auto rounded-full shadow-lg shadow-primary/20" 
-            onClick={() => router.push("/dashboard/proposals/new")}
+
+          <Button
+            className="w-full sm:w-auto rounded-full shadow-lg shadow-primary/20"
+            onClick={() => router.push("/student/dashboard/proposals/new")}
           >
             <Plus className="mr-2 h-4 w-4" />
             New Proposal
@@ -77,22 +77,22 @@ export default function DashboardPage() {
 
         {/* Main Content Layout */}
         <div className="grid gap-6 lg:grid-cols-7">
-          
+
           {/* Left Column: Proposals (Takes up 4/7 or roughly 60% on desktop) */}
           <div className="space-y-6 lg:col-span-4 xl:col-span-5">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold tracking-tight">Recent Proposals</h2>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="text-muted-foreground hover:text-primary" 
-                onClick={() => router.push("/dashboard/proposals")}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground hover:text-primary"
+                onClick={() => router.push("/student/dashboard/proposals")}
               >
                 View All
                 <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
             </div>
-            
+
             <div className="grid gap-4">
               {recentProposals.map((proposal) => (
                 <ProposalCard key={proposal.id} {...proposal} />
@@ -120,7 +120,7 @@ export default function DashboardPage() {
                   </Badge>
                 </div>
                 <CardDescription>
-                   Latest updates on your submissions
+                  Latest updates on your submissions
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -138,11 +138,11 @@ export default function DashboardPage() {
                   ))}
                 </div>
 
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="w-full mt-2"
-                  onClick={() => router.push("/dashboard/notifications")}
+                  onClick={() => router.push("/student/dashboard/notifications")}
                 >
                   View all notifications
                 </Button>
