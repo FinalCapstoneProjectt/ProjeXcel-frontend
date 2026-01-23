@@ -376,7 +376,7 @@ export default function UserManagementPage() {
                 />
               </div>
               <Select value={roleFilter} onValueChange={setRoleFilter}>
-                <SelectTrigger className="w-[140px] rounded-full">
+                <SelectTrigger className="w-35 rounded-full">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue />
                 </SelectTrigger>
