@@ -16,6 +16,7 @@ import {
   GraduationCap,
   X,
   CheckCircle,
+  Bell,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -46,6 +47,11 @@ const navigationItems = {
       href: '/student/dashboard/documentation',
       icon: Upload,
     },
+    {
+      name: 'Notifications',
+      href: '/notifications',
+      icon: Bell,
+    },
     { name: 'Settings', href: '/student/dashboard/settings', icon: Settings },
   ],
   teacher: [
@@ -61,14 +67,23 @@ const navigationItems = {
       href: '/teacher/dashboard/documentation-review',
       icon: CheckCircle,
     },
+    {
+      name: 'Notifications',
+      href: '/notifications',
+      icon: Bell,
+    },
     { name: 'Settings', href: '/teacher/dashboard/settings', icon: Settings },
   ],
   admin: [
     { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'User Management', href: '/admin/users', icon: UserCog },
-    { name: 'Departments', href: '/admin/departments', icon: Building2 },
-    { name: 'Assignments', href: '/admin/assignments', icon: Users },
-    { name: 'Public Projects', href: '/projects', icon: Globe },
+    { name: 'Assign Advisors', href: '/admin/assignments', icon: UserCog },
+    { name: 'Teams Overview', href: '/admin/teams', icon: Users },
+    { name: 'Advisors', href: '/admin/advisors', icon: GraduationCap },
+    {
+      name: 'Notifications',
+      href: '/notifications',
+      icon: Bell,
+    },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ],
 };
