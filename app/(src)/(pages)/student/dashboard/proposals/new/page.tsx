@@ -21,55 +21,58 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Save, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, Send, Loader2, Sparkles, Save } from 'lucide-react';
 import { useToast } from '@/app/(src)/hooks/use-toast';
 import { AICheckerModal } from '@/app/(src)/components/modals/AICheckerModal';
 
-// Mock existing data
-const existingProposal = {
-  title: 'AI-Powered Student Performance Analytics',
-  abstract:
-    'This project aims to develop an AI-powered system that analyzes student performance data to provide personalized learning recommendations. By leveraging machine learning algorithms, we will identify patterns in academic performance and engagement metrics to help educators and students make data-driven decisions.',
-  objectives:
-    '1. Develop a data collection pipeline for student performance metrics\n2. Build machine learning models to predict at-risk students\n3. Create a dashboard for educators to visualize insights\n4. Implement personalized recommendation engine',
-  methodology:
-    "We will use a combination of supervised and unsupervised learning techniques. Data will be collected from the university's LMS and anonymized. The system will be built using Python with TensorFlow for ML models and React for the frontend dashboard.",
-  department: 'computer_science',
-  expectedOutcomes:
-    'A fully functional web application that can:\n- Predict student performance with 85%+ accuracy\n- Provide actionable insights to educators\n- Generate personalized study recommendations',
-};
-
-export default function EditProposalPage() {
+export default function NewProposalPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showAIChecker, setShowAIChecker] = useState(false);
 
   const [formData, setFormData] = useState({
-    title: existingProposal.title,
-    abstract: existingProposal.abstract,
-    objectives: existingProposal.objectives,
-    methodology: existingProposal.methodology,
-    department: existingProposal.department,
-    expectedOutcomes: existingProposal.expectedOutcomes,
+    title: '',
+    abstract: '',
+    objectives: '',
+    methodology: '',
+    department: '',
+    expectedOutcomes: '',
   });
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleSaveDraft = () => {
+    toast({
+      title: 'Draft Saved',
+      description: 'Your proposal draft has been saved.',
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.title || !formData.abstract || !formData.department) {
+      toast({
+        variant: 'destructive',
+        title: 'Missing Fields',
+        description: 'Please fill in all required fields.',
+      });
+      return;
+    }
+
     setIsLoading(true);
 
-    // Simulate save
+    // Simulate submission
     setTimeout(() => {
       toast({
-        title: 'Changes Saved',
-        description: 'Your proposal has been updated successfully.',
+        title: 'Proposal Submitted',
+        description: 'Your proposal has been submitted for review.',
       });
       setIsLoading(false);
-      router.push('/student/dashboard/proposals/1');
+      router.push('/student/dashboard/proposals');
     }, 1500);
   };
 
@@ -89,21 +92,31 @@ export default function EditProposalPage() {
             </Button>
             <div>
               <h1 className="text-2xl font-bold tracking-tight">
-                Edit Proposal
+                New Proposal
               </h1>
               <p className="text-muted-foreground">
-                Update your proposal details and resubmit for review.
+                Create a new project proposal for review.
               </p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            className="rounded-full gap-2"
-            onClick={() => setShowAIChecker(true)}
-          >
-            <Sparkles className="h-4 w-4" />
-            AI Check
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="rounded-full gap-2"
+              onClick={() => setShowAIChecker(true)}
+            >
+              <Sparkles className="h-4 w-4" />
+              AI Check
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-full gap-2"
+              onClick={handleSaveDraft}
+            >
+              <Save className="h-4 w-4" />
+              Save Draft
+            </Button>
+          </div>
         </div>
 
         {/* Form */}
@@ -112,13 +125,13 @@ export default function EditProposalPage() {
             <CardHeader>
               <CardTitle>Basic Information</CardTitle>
               <CardDescription>
-                Update the core details of your project proposal.
+                Provide the core details of your project proposal.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="title" className="font-semibold">
-                  Project Title
+                  Project Title <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="title"
@@ -132,14 +145,14 @@ export default function EditProposalPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="department" className="font-semibold">
-                  Department
+                  Department <span className="text-destructive">*</span>
                 </Label>
                 <Select
                   value={formData.department}
                   onValueChange={(value) => handleChange('department', value)}
                 >
                   <SelectTrigger className="h-12 rounded-xl">
-                    <SelectValue placeholder="Select department" />
+                    <SelectValue placeholder="Select your department" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="computer_science">
@@ -160,18 +173,18 @@ export default function EditProposalPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="abstract" className="font-semibold">
-                  Abstract
+                  Abstract <span className="text-destructive">*</span>
                 </Label>
                 <Textarea
                   id="abstract"
                   value={formData.abstract}
                   onChange={(e) => handleChange('abstract', e.target.value)}
-                  placeholder="Provide a brief summary of your project..."
+                  placeholder="Provide a brief summary of your project (what problem does it solve, how will you solve it?)..."
                   className="min-h-[150px] rounded-xl resize-none"
                   required
                 />
                 <p className="text-xs text-muted-foreground">
-                  {formData.abstract.length}/500 characters
+                  {formData.abstract.length}/500 characters recommended
                 </p>
               </div>
             </CardContent>
@@ -193,9 +206,8 @@ export default function EditProposalPage() {
                   id="objectives"
                   value={formData.objectives}
                   onChange={(e) => handleChange('objectives', e.target.value)}
-                  placeholder="List your project objectives..."
+                  placeholder="List your project objectives (one per line)...&#10;1. First objective&#10;2. Second objective"
                   className="min-h-[120px] rounded-xl resize-none"
-                  required
                 />
               </div>
 
@@ -207,9 +219,8 @@ export default function EditProposalPage() {
                   id="methodology"
                   value={formData.methodology}
                   onChange={(e) => handleChange('methodology', e.target.value)}
-                  placeholder="Describe your approach and methods..."
+                  placeholder="Describe your approach, tools, and methods you will use..."
                   className="min-h-[120px] rounded-xl resize-none"
-                  required
                 />
               </div>
 
@@ -223,9 +234,8 @@ export default function EditProposalPage() {
                   onChange={(e) =>
                     handleChange('expectedOutcomes', e.target.value)
                   }
-                  placeholder="What do you expect to achieve?"
+                  placeholder="What deliverables or results do you expect to achieve?"
                   className="min-h-[120px] rounded-xl resize-none"
-                  required
                 />
               </div>
             </CardContent>
@@ -249,9 +259,9 @@ export default function EditProposalPage() {
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                <Save className="h-4 w-4" />
+                <Send className="h-4 w-4" />
               )}
-              Save Changes
+              Submit Proposal
             </Button>
           </div>
         </form>

@@ -26,17 +26,13 @@ export function HeroSection() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
   <Button size="lg" className="rounded-full bg-primary hover:bg-primary/90 px-10 h-14 text-base" asChild>
-    {/* 
-       IMPORTANT: Link to the ROUTE, not the file. 
-       If your folder is app/src/auth/signup, the URL is /src/auth/signup
-    */}
-    <Link href="/src/signup">
+    <Link href="/signup">
       Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
     </Link>
   </Button>
   
   <Button variant="outline" size="lg" className="rounded-full px-10 h-14 border-border text-base bg-white" asChild>
-    <Link href="/pages/projects">Browse Public Projects</Link>
+    <Link href="/projects">Browse Public Projects</Link>
   </Button>
 </div>
 

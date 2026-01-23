@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
   FileText,
@@ -15,10 +15,11 @@ import {
   Globe,
   GraduationCap,
   X,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+  CheckCircle,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-type UserRole = "student" | "teacher" | "admin";
+type UserRole = 'student' | 'teacher' | 'admin';
 
 interface SidebarProps {
   role: UserRole;
@@ -28,26 +29,47 @@ interface SidebarProps {
 
 const navigationItems = {
   student: [
-    { name: "Dashboard", href: "/student/dashboard", icon: LayoutDashboard },
-    { name: "My Proposals", href: "/student/dashboard/proposals", icon: FileText },
-    { name: "Group Members", href: "/student/dashboard/group", icon: Users },
-    { name: "Discussions", href: "/student/dashboard/discussions", icon: MessageSquare },
-    { name: "Documents", href: "/student/dashboard/documentation", icon: Upload },
-    { name: "Settings", href: "/student/dashboard/settings", icon: Settings },
+    { name: 'Dashboard', href: '/student/dashboard', icon: LayoutDashboard },
+    {
+      name: 'My Proposals',
+      href: '/student/dashboard/proposals',
+      icon: FileText,
+    },
+    { name: 'Group Members', href: '/student/dashboard/group', icon: Users },
+    {
+      name: 'Discussions',
+      href: '/student/dashboard/discussions',
+      icon: MessageSquare,
+    },
+    {
+      name: 'Documents',
+      href: '/student/dashboard/documentation',
+      icon: Upload,
+    },
+    { name: 'Settings', href: '/student/dashboard/settings', icon: Settings },
   ],
   teacher: [
-    { name: "Dashboard", href: "/teacher/dashboard", icon: LayoutDashboard },
-    { name: "Assigned Proposals", href: "/teacher/dashboard/assigned-proposals", icon: FileText },
-    { name: "Reviews", href: "/teacher/dashboard/documentation-review", icon: CheckCircle },
-    { name: "Settings", href: "/teacher/dashboard/settings", icon: Settings },
+    { name: 'Dashboard', href: '/teacher/dashboard', icon: LayoutDashboard },
+    {
+      name: 'Assigned Proposals',
+      href: '/teacher/dashboard/assigned-proposals',
+      icon: FileText,
+    },
+    { name: 'Teams & Requests', href: '/teacher/dashboard/teams', icon: Users },
+    {
+      name: 'Reviews',
+      href: '/teacher/dashboard/documentation-review',
+      icon: CheckCircle,
+    },
+    { name: 'Settings', href: '/teacher/dashboard/settings', icon: Settings },
   ],
   admin: [
-    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-    { name: "User Management", href: "/admin/users", icon: UserCog },
-    { name: "Departments", href: "/admin/departments", icon: Building2 },
-    { name: "Assignments", href: "/admin/assignments", icon: Users },
-    { name: "Public Projects", href: "/projects", icon: Globe },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'User Management', href: '/admin/users', icon: UserCog },
+    { name: 'Departments', href: '/admin/departments', icon: Building2 },
+    { name: 'Assignments', href: '/admin/assignments', icon: Users },
+    { name: 'Public Projects', href: '/projects', icon: Globe },
+    { name: 'Settings', href: '/admin/settings', icon: Settings },
   ],
 };
 
@@ -60,7 +82,7 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
     <>
       {/* Mobile overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden animate-in fade-in duration-200"
           onClick={onClose}
         />
@@ -69,8 +91,8 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          "fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-64 border-r bg-card transition-transform duration-300 lg:translate-x-0 shadow-lg lg:shadow-none",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          'fixed left-0 top-16 z-50 h-[calc(100vh-4rem)] w-64 border-r bg-card transition-transform duration-300 lg:translate-x-0 shadow-lg lg:shadow-none',
+          isOpen ? 'translate-x-0' : '-translate-x-full',
         )}
       >
         <div className="flex h-full flex-col">
@@ -91,28 +113,34 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
           <nav className="flex-1 space-y-1 p-3 overflow-y-auto">
             {items.map((item) => {
               // Exact match for dashboard root, prefix match for others
-              const isActive = pathname === item.href ||
-                (item.href !== "/student/dashboard" &&
-                  item.href !== "/teacher/dashboard" &&
-                  item.href !== "/admin/dashboard" &&
+              const isActive =
+                pathname === item.href ||
+                (item.href !== '/student/dashboard' &&
+                  item.href !== '/teacher/dashboard' &&
+                  item.href !== '/admin/dashboard' &&
                   pathname.startsWith(item.href));
 
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={() => { 
+                  onClick={() => {
                     // Close sidebar on mobile when a link is clicked
-                    if (window.innerWidth < 1024) onClose(); 
+                    if (window.innerWidth < 1024) onClose();
                   }}
                   className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                     isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                   )}
                 >
-                  <item.icon className={cn("h-5 w-5", isActive ? "text-primary" : "text-muted-foreground")} />
+                  <item.icon
+                    className={cn(
+                      'h-5 w-5',
+                      isActive ? 'text-primary' : 'text-muted-foreground',
+                    )}
+                  />
                   {item.name}
                 </Link>
               );
@@ -121,7 +149,11 @@ export function DashboardSidebar({ role, isOpen, onClose }: SidebarProps) {
 
           {/* Footer */}
           <div className="border-t p-4">
-            <Button variant="outline" className="w-full justify-start gap-2 rounded-full" asChild>
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-2 rounded-full"
+              asChild
+            >
               <Link href="/">
                 <Globe className="h-4 w-4" />
                 View Public Site
