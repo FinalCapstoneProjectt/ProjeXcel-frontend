@@ -1,28 +1,35 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { GraduationCap, Mail, Lock, User, ArrowRight, Loader2 } from "lucide-react";
-import { useToast } from "@/app/(src)/hooks/use-toast";
+} from '@/components/ui/select';
+import {
+  GraduationCap,
+  Mail,
+  Lock,
+  User,
+  ArrowRight,
+  Loader2,
+} from 'lucide-react';
+import { useToast } from '@/app/(src)/hooks/use-toast';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -30,12 +37,12 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    role: "",
-    department: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    role: '',
+    department: '',
   });
 
   const handleChange = (field: string, value: string) => {
@@ -44,20 +51,20 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
       return toast({
-        variant: "destructive",
-        title: "Passwords mismatch",
-        description: "Please make sure both passwords match.",
+        variant: 'destructive',
+        title: 'Passwords mismatch',
+        description: 'Please make sure both passwords match.',
       });
     }
 
     if (!formData.role || !formData.department) {
       return toast({
-        variant: "destructive",
-        title: "Missing information",
-        description: "Please select your role and department.",
+        variant: 'destructive',
+        title: 'Missing information',
+        description: 'Please select your role and department.',
       });
     }
 
@@ -66,10 +73,11 @@ export default function SignupPage() {
     // Simulate signup logic
     setTimeout(() => {
       toast({
-        title: "Account created!",
-        description: "Welcome to Project Hub. Please sign in with your new account.",
+        title: 'Account created!',
+        description:
+          'Welcome to Project Hub. Please sign in with your new account.',
       });
-      router.push("/login");
+      router.push('/login');
     }, 1500);
   };
 
@@ -79,18 +87,19 @@ export default function SignupPage() {
       <div className="hidden lg:flex lg:flex-1 lg:flex-col lg:justify-center bg-primary relative overflow-hidden">
         {/* The Grid Pattern background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:3rem_3rem]" />
-        
+
         <div className="relative px-16 text-primary-foreground max-w-xl mx-auto">
           <div className="space-y-10">
             <h2 className="text-5xl font-extrabold tracking-tight leading-tight">
-              Join the <br/>Project Community
+              Join the <br />
+              Project Community
             </h2>
             <ul className="space-y-6">
               {[
-                "Create and submit project proposals",
-                "Collaborate with team members",
-                "Get AI-powered feedback",
-                "Track progress in real-time",
+                'Create and submit project proposals',
+                'Collaborate with team members',
+                'Get AI-powered feedback',
+                'Track progress in real-time',
               ].map((item) => (
                 <li key={item} className="flex items-center gap-4 group">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
@@ -111,18 +120,21 @@ export default function SignupPage() {
       {/* Right side - Form Container */}
       <div className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-md space-y-8">
-          
           {/* Logo Section */}
           <Link href="/" className="flex items-center gap-3 group w-fit">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
               <GraduationCap className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-foreground">Project Hub</span>
+            <span className="text-2xl font-bold tracking-tight text-foreground">
+              Project Hub
+            </span>
           </Link>
 
           <Card className="border-none shadow-2xl shadow-primary/5 bg-card/50 backdrop-blur-sm">
             <CardHeader className="space-y-1 pb-6">
-              <CardTitle className="text-3xl font-bold tracking-tight">Create account</CardTitle>
+              <CardTitle className="text-3xl font-bold tracking-tight">
+                Create account
+              </CardTitle>
               <CardDescription className="text-base">
                 Start your academic project journey today
               </CardDescription>
@@ -131,7 +143,9 @@ export default function SignupPage() {
               <CardContent className="space-y-4">
                 {/* Full Name */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="name" className="font-semibold ml-1">Full Name</Label>
+                  <Label htmlFor="name" className="font-semibold ml-1">
+                    Full Name
+                  </Label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
@@ -139,7 +153,7 @@ export default function SignupPage() {
                       placeholder="John Doe"
                       className="pl-11 rounded-full h-11 border-muted focus-visible:ring-primary"
                       value={formData.name}
-                      onChange={(e) => handleChange("name", e.target.value)}
+                      onChange={(e) => handleChange('name', e.target.value)}
                       required
                       disabled={isLoading}
                     />
@@ -148,7 +162,9 @@ export default function SignupPage() {
 
                 {/* Email */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="font-semibold ml-1">University Email</Label>
+                  <Label htmlFor="email" className="font-semibold ml-1">
+                    University Email
+                  </Label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
@@ -157,7 +173,7 @@ export default function SignupPage() {
                       placeholder="name@university.edu"
                       className="pl-11 rounded-full h-11 border-muted focus-visible:ring-primary"
                       value={formData.email}
-                      onChange={(e) => handleChange("email", e.target.value)}
+                      onChange={(e) => handleChange('email', e.target.value)}
                       required
                       disabled={isLoading}
                     />
@@ -168,9 +184,11 @@ export default function SignupPage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
                     <Label className="font-semibold ml-1">Role</Label>
-                    <Select 
+                    <Select
                       disabled={isLoading}
-                      onValueChange={(value: string) => handleChange("role", value)}
+                      onValueChange={(value: string) =>
+                        handleChange('role', value)
+                      }
                     >
                       <SelectTrigger className="rounded-full h-11 border-muted focus:ring-primary">
                         <SelectValue placeholder="Select role" />
@@ -184,9 +202,11 @@ export default function SignupPage() {
 
                   <div className="space-y-1.5">
                     <Label className="font-semibold ml-1">Department</Label>
-                    <Select 
+                    <Select
                       disabled={isLoading}
-                      onValueChange={(value: string) => handleChange("department", value)}
+                      onValueChange={(value: string) =>
+                        handleChange('department', value)
+                      }
                     >
                       <SelectTrigger className="rounded-full h-11 border-muted focus:ring-primary">
                         <SelectValue placeholder="Select dept" />
@@ -204,7 +224,13 @@ export default function SignupPage() {
                 {/* Passwords */}
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <Label htmlFor="password" title="Password" className="font-semibold ml-1">Password</Label>
+                    <Label
+                      htmlFor="password"
+                      title="Password"
+                      className="font-semibold ml-1"
+                    >
+                      Password
+                    </Label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                       <Input
@@ -213,7 +239,9 @@ export default function SignupPage() {
                         placeholder="••••••••"
                         className="pl-11 rounded-full h-11 border-muted focus-visible:ring-primary"
                         value={formData.password}
-                        onChange={(e) => handleChange("password", e.target.value)}
+                        onChange={(e) =>
+                          handleChange('password', e.target.value)
+                        }
                         required
                         disabled={isLoading}
                       />
@@ -221,7 +249,13 @@ export default function SignupPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="confirmPassword" title="Confirm" className="font-semibold ml-1">Confirm</Label>
+                    <Label
+                      htmlFor="confirmPassword"
+                      title="Confirm"
+                      className="font-semibold ml-1"
+                    >
+                      Confirm
+                    </Label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                       <Input
@@ -230,7 +264,9 @@ export default function SignupPage() {
                         placeholder="••••••••"
                         className="pl-11 rounded-full h-11 border-muted focus-visible:ring-primary"
                         value={formData.confirmPassword}
-                        onChange={(e) => handleChange("confirmPassword", e.target.value)}
+                        onChange={(e) =>
+                          handleChange('confirmPassword', e.target.value)
+                        }
                         required
                         disabled={isLoading}
                       />
@@ -239,7 +275,11 @@ export default function SignupPage() {
                 </div>
               </CardContent>
               <CardFooter className="flex flex-col gap-6 pt-4">
-                <Button type="submit" className="w-full rounded-full h-12 text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.01]" disabled={isLoading}>
+                <Button
+                  type="submit"
+                  className="w-full rounded-full h-12 text-base font-bold shadow-lg shadow-primary/20 transition-all hover:scale-[1.01]"
+                  disabled={isLoading}
+                >
                   {isLoading ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
@@ -249,10 +289,13 @@ export default function SignupPage() {
                     </>
                   )}
                 </Button>
-                
+
                 <p className="text-center text-sm text-muted-foreground">
-                  Already have an account?{" "}
-                  <Link href="/login" className="font-bold text-primary hover:underline">
+                  Already have an account?{' '}
+                  <Link
+                    href="/login"
+                    className="font-bold text-primary hover:underline"
+                  >
                     Sign in here
                   </Link>
                 </p>
@@ -261,10 +304,14 @@ export default function SignupPage() {
           </Card>
 
           <p className="text-center text-[10px] uppercase tracking-widest text-muted-foreground/60 px-6">
-            By signing up, you agree to our{" "}
-            <Link href="/terms" className="underline hover:text-foreground">Terms</Link>
-            {" "}and{" "}
-            <Link href="/privacy" className="underline hover:text-foreground">Privacy Policy</Link>
+            By signing up, you agree to our{' '}
+            <Link href="/terms" className="underline hover:text-foreground">
+              Terms
+            </Link>{' '}
+            and{' '}
+            <Link href="/privacy" className="underline hover:text-foreground">
+              Privacy Policy
+            </Link>
           </p>
         </div>
       </div>
