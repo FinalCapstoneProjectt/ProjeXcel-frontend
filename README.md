@@ -173,7 +173,6 @@ go run cmd/server/main.go
 ```bash
 # Clone frontend repository
 git clone https://github.com/YourOrg/university-project-hub-frontend.git
-cd university-project-hub-frontend
 
 # Install dependencies
 npm install
